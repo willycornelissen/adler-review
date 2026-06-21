@@ -1,0 +1,10 @@
+# Compiled binaries
+adler-review
+
+# Node.js dependencies
+.opencode/node_modules/
+node_modules/
+
+# OS/System files
+.DS_Store
+Thumbs.db
