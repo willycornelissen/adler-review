@@ -5,9 +5,12 @@ import (
 	"fmt"
 	"strings"
 	"time"
-
-	"adler-review-cli/internal/googleai"
 )
+
+// LLMClient defines the interface required by the reviewer package.
+type LLMClient interface {
+	GenerateContentWithRetry(ctx context.Context, modelName string, systemInstruction string, prompt string) (string, error)
+}
 
 // SystemInstruction contains Adler's 5-part analytical reading framework in Portuguese.
 const SystemInstruction = `Você é um resenhista literário e analista intelectual altamente rigoroso, especializado na metodologia de leitura analítica desenvolvida por Mortimer Adler em seu livro "Como Ler Livros" (1940).
@@ -64,7 +67,7 @@ Retorne a resposta EXATAMENTE no seguinte formato (substitua os valores entre co
 - **Breve Descrição:** [Uma frase resumindo a premissa do livro]`
 
 // ConfirmBookDetails identifies and formats book details using Gemini.
-func ConfirmBookDetails(ctx context.Context, client *googleai.Client, modelName string, title, author string) (string, error) {
+func ConfirmBookDetails(ctx context.Context, client LLMClient, modelName string, title, author string) (string, error) {
 	genCtx, cancel := context.WithTimeout(ctx, 1*time.Minute)
 	defer cancel()
 
@@ -78,7 +81,7 @@ func ConfirmBookDetails(ctx context.Context, client *googleai.Client, modelName 
 }
 
 // GenerateReviewForBook manages context timeouts and triggers content generation for a specific book.
-func GenerateReviewForBook(ctx context.Context, client *googleai.Client, modelName string, bookDetails string) (string, error) {
+func GenerateReviewForBook(ctx context.Context, client LLMClient, modelName string, bookDetails string) (string, error) {
 	genCtx, cancel := context.WithTimeout(ctx, 5*time.Minute)
 	defer cancel()
 

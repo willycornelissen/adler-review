@@ -102,7 +102,7 @@ adler-review-cli/
 
 | Caso de Erro | Comportamento da CLI | Exit Code |
 |---|---|---|
-| Chave de API ausente | Imprime erro no `stderr` sugerindo exportar `GEMINI_API_KEY`. | 1 |
+| Chave de API ausente | Solicita a chave de forma interativa no terminal. Se continuar vazia, imprime erro e sai. | 1 |
 | Arquivo de entrada inacessível | Imprime erro no `stderr` notificando arquivo inexistente/ilegível. | 1 |
 | Pasta de saída sem permissão | Imprime erro no `stderr` antes de chamar a API, evitando custos. | 1 |
 | Erro de Rate Limit persistente | Imprime erro após 3 tentativas de recuo exponencial. | 1 |

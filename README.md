@@ -62,13 +62,20 @@ A resenha gerada segue rigorosamente a estrutura de leitura analítica proposta 
 
 ### Configuração da Chave da API
 
-A forma recomendada de fornecer a chave do Gemini é por meio da variável de ambiente `GEMINI_API_KEY`:
+A forma recomendada de fornecer as chaves de API é por meio de variáveis de ambiente:
+
+- Para o **Gemini**: `GEMINI_API_KEY`
+- Para a **Groq**: `GROQ_API_KEY`
 
 ```bash
-export GEMINI_API_KEY="sua-chave-api-aqui"
+export GEMINI_API_KEY="sua-chave-gemini-aqui"
+# ou
+export GROQ_API_KEY="sua-chave-groq-aqui"
 ```
 
-Alternativamente, você pode fornecer a chave diretamente via flag ao executar o utilitário.
+Alternativamente, você pode fornecer a chave diretamente via flag ao executar o utilitário. 
+
+Se nenhuma chave for encontrada nas variáveis de ambiente ou via flag, o utilitário **solicitará a chave de forma interativa** diretamente no terminal, permitindo que você digite ou cole a sua API Key do provedor correspondente para iniciar o processo.
 
 ---
 
@@ -84,10 +91,17 @@ Para iniciar o fluxo interativo de criação de uma resenha:
 
 | Flag (Longa) | Flag (Curta) | Tipo | Descrição |
 |---|---|---|---|
+| `--provider` | `-p` | string | Provedor de LLM: `gemini` ou `groq` (Default: `gemini`) |
 | `--output` | `-o` | string | Caminho personalizado para salvar o arquivo final (Default: `<slug-do-titulo>.md`) |
-| `--key` | `-k` | string | Sobrescreve/fornece a Chave de API do Google AI diretamente por comando |
-| `--model` | `-m` | string | Sobrescrita manual para usar um modelo Gemini específico (ex: `gemini-1.5-pro`) |
+| `--key` | `-k` | string | Sobrescreve/fornece a Chave de API do provedor diretamente por comando |
+| `--model` | `-m` | string | Sobrescrita manual para usar um modelo específico (ex: `llama-3.3-70b-versatile` para groq, ou `gemini-1.5-pro` para gemini) |
 | `--help` | `-h` | booleano | Exibe o guia de ajuda e lista de comandos |
+
+#### Exemplo de Uso com Groq:
+
+```bash
+./adler-review --provider groq -o resenha_cristianismo.md
+```
 
 #### Exemplo de Uso com Flags:
 
